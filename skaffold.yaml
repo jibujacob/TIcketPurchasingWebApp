@@ -7,14 +7,16 @@ deploy:
 build:
   local:
     push: false
-    useDockerCLI: true
+    # useDockerCLI: true
+  # googleCloudBuild:
+  #   projectId: ticketing-dev-jpj
   artifacts:
     - image: jibujacob/auth
       context: auth
       docker:
         dockerfile: Dockerfile
-        cliFlags:
-          - --platform=linux/amd64
+        # cliFlags:
+        #   - --platform=linux/amd64
       sync:
         manual:
           - src: "src/**/*.ts"
