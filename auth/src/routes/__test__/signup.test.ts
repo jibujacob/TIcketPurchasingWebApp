@@ -48,4 +48,16 @@ it("disallows duplicate email", async () =>{
         email:"test@abc.com",
         password:"password"
     }).expect(400);
+});
+
+it("sets a cookie after successful sign up", async () => {
+    const response = await request(app)
+        .post("/api/users/signup")
+        .send({
+            email:"test@abc.com",
+            password:"password"
+        }).expect(201);
+    
+    expect(response.get("Set-Cookie")).toBeDefined();
+
 })
