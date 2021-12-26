@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextjsclient-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nextjsclient
+  template:
+    metadata:
+      labels:
+        app: nextjsclient
+    spec:
+      containers:
+        - name: nextjsclient
+          image: jibujacob/nextjsclient
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nextjsclient-srv
+spec:
+  selector:
+    app: nextjsclient
+  type: ClusterIP
+  ports:
+    - name: nextjsclient
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
