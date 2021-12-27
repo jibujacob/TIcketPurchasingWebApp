@@ -13,9 +13,9 @@ const start = async () => {
     }
     try {
         await mongoose.connect(process.env.MONGO_URI);
-        console.log("Connected to Auth Mongo DB");
+        console.log("Connected to Tickets Mongo DB");
         app.listen(port,()=>{
-            console.log(`Auth Services listening on ${port}!!`);
+            console.log(`Tickets Services listening on ${port}!!`);
         }); 
     } catch (error) {
         console.log(error);   

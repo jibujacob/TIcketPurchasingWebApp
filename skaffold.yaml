@@ -31,3 +31,13 @@ build:
         manual:
           - src: "**/*.js"
             dest: .
+    - image: jibujacob/tickets
+      context: tickets
+      docker:
+        dockerfile: Dockerfile
+        # cliFlags:
+        #   - --platform=linux/amd64
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
