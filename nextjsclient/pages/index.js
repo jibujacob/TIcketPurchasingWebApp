@@ -1,19 +1,20 @@
-import React from 'react'
+import {buildClient} from "../api/build-client";
 
-const index = ({color}) => {
-    console.log("I am in the component",color);
+const index = ({currentUser}) => {
     return (
-        <div>
-            <h1>Landing Page</h1>
+        <div className="container">
+            {currentUser ? 
+                <h1>You are signed in</h1> :
+                <h1>You are NOT signed in</h1>}
         </div>
     )
 }
 
-index.getInitialProps = () => {
-    console.log("Inside the server");
-
-    return {color:"red"}
+index.getInitialProps = async (context) => {
+    console.log("Landing Page");
+    const {data} = await buildClient(context).get("/api/users/currentUser");
+    return data;
 }
 
  
-export default index
+export default index;
