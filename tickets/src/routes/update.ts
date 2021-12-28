@@ -3,6 +3,8 @@ import { body } from "express-validator";
 
 import { requireAuth, validateRequest ,NotFoundError,NotAuthoriedError} from "@jjtickets2021/common";
 import { Ticket } from "../models/ticket";
+import { TicketUpdatedPublisher } from "../events/publishers/ticket-updated-publishers";
+import { natsWrapper } from "../nats-wrapper";
 
 
 const router = express.Router();
@@ -35,6 +37,13 @@ router.put("/api/tickets/:id",
         });
 
         await ticketExists.save();
+
+        new TicketUpdatedPublisher(natsWrapper.client).publish({
+            id:ticketExists.id,
+            title:ticketExists.title,
+            price:ticketExists.price,
+            userId : ticketExists.userId
+        })
         
     res.status(200).send(ticketExists);
 });

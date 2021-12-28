@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 import { app } from "./app";
+import { natsWrapper } from "./nats-wrapper";
 
 const port = process.env.PORT || 5001;
 
@@ -12,6 +13,16 @@ const start = async () => {
         throw new Error("MONGO_URI must be defined")
     }
     try {
+        await natsWrapper.connect("ticketing","abc","http://nats-srv:4222");
+
+
+        natsWrapper.client.on("close",()=>{
+            console.log("NATS connection closed!");
+            process.exit();  
+        });
+        process.on("SIGINT",()=>natsWrapper.client.close());
+        process.on("SIGTERM",()=>natsWrapper.client.close());
+
         await mongoose.connect(process.env.MONGO_URI);
         console.log("Connected to Tickets Mongo DB");
         app.listen(port,()=>{
