@@ -88,3 +88,18 @@ it("Reserves the ticket", async () => {
             .send({ticketId:ticket.id}).expect(201);
 });
 
+it("Emits an event on creation", async () => {
+    const ticket = Ticket.build({
+        title: "Title1",
+        price: 20
+    });
+
+    await ticket.save();
+
+    await request(app)
+            .post("/api/orders")
+            .set('Cookie',global.signin())
+            .send({ticketId:ticket.id}).expect(201);
+
+    expect(natsWrapper.client.publish).toHaveBeenCalled();
+})
