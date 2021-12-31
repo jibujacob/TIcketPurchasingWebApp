@@ -53,9 +53,11 @@ ticketSchema.statics.build = (attrs : TicketAttrs) => {
 }
 
 ticketSchema.statics.findByEvent = (event : {id:string,version:number}) => {
+    console.log("event:",event);
+    
     return Ticket.findOne({
         _id: event.id,
-        verion:event.version-1
+        version: event.version - 1
     })
 }
 
