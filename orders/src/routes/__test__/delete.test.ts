@@ -4,11 +4,13 @@ import { app } from "../../app";
 import { Order } from "../../models/order";
 import { Ticket } from "../../models/ticket";
 import {natsWrapper} from "../../nats-wrapper";
+import mongoose from "mongoose";
 
 it("Cancels the order", async() =>{ 
     const userOne = global.signin();
-
+    const id = new mongoose.Types.ObjectId()
     const ticket = Ticket.build({
+        id:id.toString(),
         title: "Title1",
         price: 20
     });
@@ -33,8 +35,9 @@ it("Cancels the order", async() =>{
 it("Returns Unauthorized access if user does not have accees to cancel particular order", async() =>{ 
     const userOne = global.signin();
     const userTwo = global.signin();
-
+    const id = new mongoose.Types.ObjectId()
     const ticket = Ticket.build({
+        id:id.toString(),
         title: "Title1",
         price: 20
     });
@@ -54,8 +57,9 @@ it("Returns Unauthorized access if user does not have accees to cancel particula
 
 it("Emits an event on cancellation", async () => {
     const userOne = global.signin();
-
+    const id = new mongoose.Types.ObjectId()
     const ticket = Ticket.build({
+        id:id.toString(),
         title: "Title1",
         price: 20
     });

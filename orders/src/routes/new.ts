@@ -2,7 +2,7 @@ import express,{Request,Response} from "express";
 import {body} from "express-validator";
 import mongoose from "mongoose"
 
-import { BadRequestError, NotFoundError, OrderStatus, requireAuth,validateRequest } from "@jjtickets2021/common";
+import { BadRequestError, NotFoundError,requireAuth,validateRequest ,OrderStatus} from "@jjtickets2021/common";
 import { Ticket } from "../models/ticket";
 import { Order } from "../models/order";
 import { OrderCreatedPublisher } from "../events/publishers/order-created-publisher";

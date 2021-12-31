@@ -1,12 +1,13 @@
 import request from "supertest";
 import { app } from "../../app";
 import { Ticket } from "../../models/ticket";
-
+import mongoose from "mongoose";
 
 it("fetches the order", async() =>{ 
     const userOne = global.signin();
-
+    const id = new mongoose.Types.ObjectId()
     const ticket = Ticket.build({
+        id:id.toString(),
         title: "Title1",
         price: 20
     });
@@ -26,8 +27,9 @@ it("fetches the order", async() =>{
 it("Returns Unauthorized access if user does not have accees to fethc particular order", async() =>{ 
     const userOne = global.signin();
     const userTwo = global.signin();
-
+    const id = new mongoose.Types.ObjectId()
     const ticket = Ticket.build({
+        id:id.toString(),
         title: "Title1",
         price: 20
     });
