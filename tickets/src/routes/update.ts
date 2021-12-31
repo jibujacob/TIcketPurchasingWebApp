@@ -42,7 +42,8 @@ router.put("/api/tickets/:id",
             id:ticketExists.id,
             title:ticketExists.title,
             price:ticketExists.price,
-            userId : ticketExists.userId
+            userId : ticketExists.userId,
+            version: ticketExists.version,
         })
         
     res.status(200).send(ticketExists);
