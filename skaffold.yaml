@@ -41,3 +41,13 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
+    - image: jibujacob/orders
+      context: orders
+      docker:
+        dockerfile: Dockerfile
+        # cliFlags:
+        #   - --platform=linux/amd64
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .

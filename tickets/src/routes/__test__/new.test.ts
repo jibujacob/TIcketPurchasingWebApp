@@ -2,6 +2,8 @@ import request from "supertest";
 import { app } from "../../app";
 import { Ticket } from "../../models/ticket";
 
+import {natsWrapper} from "../../nats-wrapper";
+
 it("Has a route handler listening to /api/tickets for post requests", async () =>{
     const response =  await request(app)
             .post("/api/tickets")
@@ -9,14 +11,14 @@ it("Has a route handler listening to /api/tickets for post requests", async () =
     expect(response.statusCode).not.toEqual(404);
 });
 
-it("Can be accessed if the user is signed in", async () =>{
+it("Can be accessed only if the user is signed in", async () =>{
     await request(app)
             .post("/api/tickets")
             .send({})
             .expect(401);
 });
 
-it("Returns a status otehr than 401 if the user is signed in", async () =>{
+it("Returns a status other than 401 if the user is signed in", async () =>{
     const response =  await request(app)
             .post("/api/tickets")
             .set('Cookie',global.signin())
@@ -72,3 +74,15 @@ it("Creates a ticket with valid inputs", async () =>{
     expect(tickets[0].price).toEqual(10)
 });
 
+it("it publishes an event",async () =>{
+    const title ="title";
+    await request(app)
+            .post("/api/tickets")
+            .set('Cookie',global.signin())
+            .send({
+                title,
+                price: 10
+            }).expect(201);
+
+    expect(natsWrapper.client.publish).toHaveBeenCalled();
+})

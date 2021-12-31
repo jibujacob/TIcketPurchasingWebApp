@@ -34,9 +34,9 @@ const start = async () => {
         process.on("SIGTERM",()=>natsWrapper.client.close());
 
         await mongoose.connect(process.env.MONGO_URI);
-        console.log("Connected to Tickets Mongo DB");
+        console.log("Connected to Orders Mongo DB");
         app.listen(port,()=>{
-            console.log(`Tickets Services listening on ${port}!!`);
+            console.log(`Tickets Orders listening on ${port}!!`);
         }); 
     } catch (error) {
         console.log(error);   
