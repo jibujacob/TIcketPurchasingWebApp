@@ -5,8 +5,6 @@ import mongoose from "mongoose";
 import { Message } from "node-nats-streaming";
 import { Ticket } from "../../../models/ticket";
 
- 
-
 const setup = async () =>{
     const listener = new TicketUpdatedListener(natsWrapper.client);
 
