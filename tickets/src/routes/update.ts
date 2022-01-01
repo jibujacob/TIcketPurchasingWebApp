@@ -1,7 +1,7 @@
 import express,{Request,Response} from "express";
 import { body } from "express-validator";
 
-import { requireAuth, validateRequest ,NotFoundError,NotAuthoriedError} from "@jjtickets2021/common";
+import { requireAuth, validateRequest ,NotFoundError,NotAuthoriedError, BadRequestError} from "@jjtickets2021/common";
 import { Ticket } from "../models/ticket";
 import { TicketUpdatedPublisher } from "../events/publishers/ticket-updated-publishers";
 import { natsWrapper } from "../nats-wrapper";
@@ -25,6 +25,10 @@ router.put("/api/tickets/:id",
         const ticketExists = await Ticket.findById(req.params.id);
         if(!ticketExists){
             throw new NotFoundError();
+        }
+
+        if(ticketExists.orderId){
+            throw new BadRequestError("Cannot edit a reserved ticket");
         }
          
         if(ticketExists.userId.toString() !== req.currentUser!.id){

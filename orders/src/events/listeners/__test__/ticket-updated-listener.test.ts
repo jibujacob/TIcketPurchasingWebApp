@@ -34,24 +34,24 @@ const setup = async () =>{
     return {listener,data,ticket,msg};
 }
 
-// it("creates and updates a ticket", async () => {
-//     const {listener,data,ticket,msg} = await setup();
+it("creates and updates a ticket", async () => {
+    const {listener,data,ticket,msg} = await setup();
     
-//     await listener.onMessage(data,msg);
-//     const updatedTicket = await Ticket.findById(ticket.id);
+    await listener.onMessage(data,msg);
+    const updatedTicket = await Ticket.findById(ticket.id);
     
-//     expect(updatedTicket).toBeDefined();
-//     expect(updatedTicket!.title).toEqual(data.title);
-//     expect(updatedTicket!.price).toEqual(data.price);
-//     expect(updatedTicket!.version).toEqual(data.version);
-// });
+    expect(updatedTicket).toBeDefined();
+    expect(updatedTicket!.title).toEqual(data.title);
+    expect(updatedTicket!.price).toEqual(data.price);
+    expect(updatedTicket!.version).toEqual(data.version);
+});
 
-// it("ack the message", async () => {
-//     const {listener,data,msg} = await setup();
-//     await listener.onMessage(data,msg);
-//     // const ticket = await Ticket.findById(data.id);
-//     expect(msg.ack).toHaveBeenCalled();
-// });
+it("ack the message", async () => {
+    const {listener,data,msg} = await setup();
+    await listener.onMessage(data,msg);
+    // const ticket = await Ticket.findById(data.id);
+    expect(msg.ack).toHaveBeenCalled();
+});
 
 it('does not call ack if the evnt has skipped version number',async() => {
     const {listener,data,ticket,msg} = await setup();
