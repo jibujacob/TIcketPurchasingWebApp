@@ -61,3 +61,13 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
+    - image: jibujacob/payments
+      context: payments
+      docker:
+        dockerfile: Dockerfile
+        # cliFlags:
+        #   - --platform=linux/amd64
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
