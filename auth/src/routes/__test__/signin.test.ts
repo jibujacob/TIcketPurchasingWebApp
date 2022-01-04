@@ -26,7 +26,7 @@ it("fails when an password does not match" , async () => {
         }).expect(400);
 });
 
-it("fails when an password does not match" , async () => {
+it("passes when an password does match" , async () => {
     await request(app)
         .post("/api/users/signup")
         .send({
