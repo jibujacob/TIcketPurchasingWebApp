@@ -4,7 +4,7 @@ import { natsWrapper } from "./nats-wrapper";
 const port = process.env.PORT || 5001;
 
 const start = async () => {
-    console.log("Starting up expiration service...");
+    console.log("Starting up Expiration service...");
     
     if(!process.env.NATS_URL){
         throw new Error("NATS_URL must be defined")
